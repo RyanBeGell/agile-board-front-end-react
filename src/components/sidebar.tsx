@@ -22,47 +22,50 @@ const Sidebar: React.FC = () => {
   };
 
   return (
-    <div className="w-72 h-full flex flex-col bg-white">
-      <div className="px-5 py-4 flex justify-between items-center border-b">
-        <h2 className="text-lg font-semibold">Workspaces</h2>
+    <div className="w-64 h-full flex flex-col bg-background">
+      <div className="pl-2 flex justify-between items-center mb-2">
+        <h2 className="text-xs font-bold">Workspaces</h2>
         <Button
           variant={'ghost'}
-          className="flex items-center justify-center p-2"
+          size={'icon'}
+          className="flex items-center justify-center p-2 h-8 w-8"
           onClick={handleAddWorkspace}
         >
           <Plus className="h-5 w-5" aria-hidden="true" />
         </Button>
       </div>
-      <div className="flex-1 p-4">
+      <div className="flex-1">
         {workspaces.map((workspace, index) => (
-  <Accordion type="single" key={workspace.id} collapsible>
-    <AccordionItem value={`item-${index}`}>
-      <AccordionTrigger>
-        <div className="flex items-center"> {/* Add this div with flex */}
-          <workspace.icon className="mr-2" /> {/* Add a right margin to separate icon from text */}
-          {workspace.name}
-        </div>
-      </AccordionTrigger>
-      <AccordionContent className="pl-4">
-        {/* Indent here for visual hierarchy */}
-        <div className="flex flex-col">
-          <Button
-            variant="ghost"
-            className="h-8 flex items-center justify-start w-full mb-2"
-          >
-            <Layout className=" h-5 mr-2" /> Boards
-          </Button>
-          <Button
-            variant="ghost"
-            className="h-8 flex items-center justify-start w-full"
-          >
-            <Settings className="h-5 mr-2" /> Settings
-          </Button>
-        </div>
-      </AccordionContent>
-    </AccordionItem>
-  </Accordion>
-))}
+          <Accordion type="single" key={workspace.id} collapsible>
+            <AccordionItem value={`item-${index}`} className="border-b-0 ">
+              <AccordionTrigger className="text-sm h-10">
+                <div className="flex items-center">
+                  <div className="bg-black rounded-md p-1 mr-2 ">
+                    <workspace.icon className="h-5 w-5 text-white" />
+                  </div>
+                  {workspace.name}
+                </div>
+              </AccordionTrigger>
+              <AccordionContent className="pl-4">
+                {/* Indent here for visual hierarchy */}
+                <div className="flex flex-col">
+                  <Button
+                    variant="ghost"
+                    className="h-8 flex items-center justify-start w-full mb-2"
+                  >
+                    <Layout className=" h-5 mr-2" /> Boards
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    className="h-8 flex items-center justify-start w-full"
+                  >
+                    <Settings className="h-5 mr-2" /> Settings
+                  </Button>
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        ))}
       </div>
     </div>
   );

@@ -23,10 +23,9 @@ import { cn } from '@/lib/utils';
 import {
   Check,
   ChevronsUpDown,
-  FolderKanban,
   Github,
+  KanbanSquare,
   Moon,
-  ScanFace,
   Sun,
 } from 'lucide-react';
 import { useTheme } from 'next-themes';
@@ -60,15 +59,17 @@ export default function Navbar() {
     },
   ];
 
+  //placeholder for user initials
+  const initials = 'RB';
   return (
     <>
-      <nav className="bg-inherit text-inherit p-2">
+      <nav className="bg-background p-2 border-b border-b-1 border-border">
         <div className="flex flex-wrap justify-between items-center">
           {/* Left Side */}
           <div className="flex flex-1 items-center">
             {/* Alternate Logo */}
             {/* <img src="/icon.png" alt="Agilify" className="h-5 w-5" /> */}
-            <FolderKanban className="text-inherit" />
+            <KanbanSquare className="text-primary" />
             <span className="font-semibold text-xl ml-1 mr-6">Agilify</span>
             <Button className="h-9">Create</Button>
           </div>
@@ -120,6 +121,10 @@ export default function Navbar() {
                 </Command>
               </PopoverContent>
             </Popover>
+            {/* Github Repo Icon */}
+            <Button variant="outline" size="icon" className="w-9 h-9 py-2 px-0">
+              <Github className="h-4 w-4" />
+            </Button>
             {/* Dark Mode Toggle */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -145,11 +150,10 @@ export default function Navbar() {
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-            <Button variant="outline" size="icon" className="w-9 h-9 py-2 px-0">
-              <Github className="h-4 w-4" />
-            </Button>
             {/* Avatar */}
-            <ScanFace className="h-8 w-8 p-1 rounded-full outline" />
+            <div className="h-8 w-8 p-1 rounded-full flex items-center justify-center font-bold text-white bg-primary">
+              {initials}
+            </div>
           </div>
         </div>
       </nav>

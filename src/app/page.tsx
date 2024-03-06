@@ -1,14 +1,24 @@
 'use client';
 
-import NavBar from '@/components/navbar';
+import BoardDashboard from '@/components/board-dashboard';
+import Navbar from '@/components/navbar';
 import Sidebar from '@/components/sidebar';
 
 export default function Home() {
   return (
-    <>
-      <NavBar />
-      <Sidebar />
-      <main></main>
-    </>
+    <div className='bg-background'>
+      <div>
+        <Navbar />
+      </div>
+      <div className="flex-1 grid grid-cols-[auto,1fr] mt-12 mx-16">
+        <div >
+          <Sidebar />
+        </div>
+        <div className='ml-6'>
+          <BoardDashboard />
+          <main></main>
+        </div>
+      </div>
+      </div>
   );
 }
