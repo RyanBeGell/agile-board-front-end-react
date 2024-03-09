@@ -21,6 +21,7 @@ export default function Landing() {
                   <a
                     href="https://github.com/RyanBeGell/agile-board-front-end-react"
                     className="text-xs font-semibold flex items-center"
+                    target='_blank'
                   >
                     {' '}
                     {/* Changed from <p> to <div> */}
