@@ -18,7 +18,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-
+import { useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import {
   Check,
@@ -61,6 +61,7 @@ export default function Navbar() {
 
   //placeholder for user initials
   const initials = 'RB';
+  const router = useRouter();
   return (
     <>
       <nav className="bg-background p-2 border-b border-b-1 border-border">
@@ -69,8 +70,14 @@ export default function Navbar() {
           <div className="flex flex-1 items-center">
             {/* Alternate Logo */}
             {/* <img src="/icon.png" alt="Agilify" className="h-5 w-5" /> */}
-            <KanbanSquare className="text-primary" />
-            <span className="font-semibold text-xl ml-1 mr-6">Agilify</span>
+            <Button
+              variant="ghost"
+              className=" mr-4 p-2 h-8"
+              onClick={() => router.push('/')}
+            >
+              <KanbanSquare  className=" h-8 w-8 fill-primary" />
+              <span className="font-bold text-xl ml-1">Agilify</span>
+            </Button>
             <Button className="h-9">Create</Button>
           </div>
 
