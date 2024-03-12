@@ -1,8 +1,8 @@
 'use client';
 
-import BoardDashboard from '@/components/board-dashboard';
-import Navbar from '@/components/navbar';
-import Sidebar from '@/components/sidebar';
+import Sidebar from '@/app/workspace/sidebar';
+import Navbar from '@/components/navbar/navbar';
+import BoardDashboard from '@/components/workspace/boards';
 
 export default function Home() {
   return (

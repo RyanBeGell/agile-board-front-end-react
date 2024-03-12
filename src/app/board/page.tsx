@@ -1,7 +1,7 @@
 'use client';
 
-import Column from '@/components/column';
-import Layout from '@/components/layout';
+import Column from '@/components/board/column/column';
+import Layout from '@/components/board/layout';
 import {
   AlertDialog,
   AlertDialogAction,

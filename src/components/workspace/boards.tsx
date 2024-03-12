@@ -10,8 +10,8 @@ import { PopoverClose } from '@radix-ui/react-popover';
 import { FolderKanban, Layout, Lock, Plus } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
-import { FormPicker } from './form-picker';
-import { Button } from './ui/button';
+import { FormPicker } from '../board/card/form-picker';
+import { Button } from '../ui/button';
 
 export default function BoardDashboard() {
   const workspace = { id: '1', name: 'Project Planning', icon: Layout };
