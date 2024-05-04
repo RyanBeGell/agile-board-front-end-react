@@ -102,10 +102,10 @@ export default function BoardDashboard() {
             <PopoverTrigger asChild>
               <div
                 role="button"
-                className=" bg-muted hover:cursor-pointer justify-center text-center h-full w-full aspect-video relative rounded-sm flex font-semibold flex-col p-2 hover:opacity-75 transition"
+                className=" bg-muted hover:cursor-pointer justify-center text-center h-full w-full aspect-video relative rounded-sm flex font-semibold p-2 hover:opacity-75 transition"
               >
                 <div className="flex items-center p-2">
-                  <Plus className="mr-2 h-5 w-5" />
+                  <Plus className="mr-2 h-5 w-5 " />
                   <p className="text-sm">Create new board</p>
                 </div>
               </div>

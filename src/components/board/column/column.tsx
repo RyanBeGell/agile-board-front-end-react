@@ -10,7 +10,7 @@ const Column = ({ title, cards }: { title: string; cards: any[] }) => {
           <div
             {...provided.droppableProps}
             ref={provided.innerRef}
-            className="min-w-[240px] bg-accent p-4 rounded m-2"
+            className="min-w-[284px] bg-accent p-4 rounded-xl m-2"
           >
             <h2 className="font-bold mb-2">{title}</h2>
             {cards.map((card) => (

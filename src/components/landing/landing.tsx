@@ -9,8 +9,7 @@ export default function Landing() {
     <div className="flex flex-col flex-grow">
       <main className="flex-1 flex items-center justify-center">
         <section className="w-full ">
-          <div className="container flex flex-col items-center justify-center space-y-6 px-4 md:px-6">
-            <div className="space-y-6 text-center">
+          <div className="container flex flex-col items-center text-center justify-center space-y-16 px-4 md:px-6">
               <div className="flex justify-center">
                 <div className="bg-muted py-1 px-2 rounded-md inline-flex items-center">
                   <span className="text-sm">🛠️</span>
@@ -32,17 +31,16 @@ export default function Landing() {
                   </a>
                 </div>
               </div>
-              <h1 className="text-6xl font-bold tracking-tighter sm:text-6xl">
+              <h1 className="text-6xl font-bold tracking-tighter md:text-6xl lg:text-7xl xl:text-8xl">
                 <span className="gradient-text">Agilify </span> your project
                 workflow
               </h1>
-              <p className="mx-auto max-w-[600px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
+              <p className="mx-auto max-w-[600px] xl:max-w-[1000px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
                 The platform for rapid progress. Designed for individuals and
                 teams seeking efficiency without the clutter, Agilify
                 streamlines your projects, tasks, and deadlines into a clear,
                 manageable workflow.
               </p>
-            </div>
             <div className="mx-auto w-full max-w-sm space-y-2">
               <div className="flex justify-center space-x-4">
                 <Button size="lg" className="btn-glow">

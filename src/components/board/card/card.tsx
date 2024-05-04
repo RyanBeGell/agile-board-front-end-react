@@ -52,8 +52,8 @@ const Card = ({ title, description }: CardProps) => {
       <DialogTrigger asChild>
         <div
           role="button"
-          className=" bg-card p-3 rounded shadow mb-2 text-sm
-     w-full h-8 justify-start flex items-center hover:shadow-[inset_0_0_0_2px] hover:shadow-primary"
+          className=" bg-card p-3 shadow mb-2 text-sm
+     w-full h-9 justify-start flex items-center hover:shadow-[inset_0_0_0_2px] hover:shadow-primary rounded-xl"
         >
           {title}
         </div>
