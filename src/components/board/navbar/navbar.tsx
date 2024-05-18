@@ -65,7 +65,7 @@ const Navbar: React.FC = () => {
 
   return (
     <nav className="bg-background p-2 border-b border-b-1 border-border">
-      <div className="container mx-auto px-2">
+      <div className="px-2">
         <div className="flex flex-wrap justify-between items-center">
           <div className="flex flex-1 items-center">
             <Button variant="ghost" className="mr-4 p-2 py-4 h-9 -ml-2" onClick={() => router.push('/')}>

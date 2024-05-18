@@ -1,4 +1,4 @@
-import Navbar from '@/components/navbar/navbar';
+import Navbar from '@/components/board/navbar/navbar';
 import React from 'react';
 
 interface LayoutProps {
