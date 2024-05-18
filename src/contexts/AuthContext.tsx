@@ -1,8 +1,12 @@
-// contexts/AuthContext.tsx
+'use client';
 
-"use client"
-
-import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
+import {
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 
 interface AuthContextType {
   token: string | null;
@@ -12,12 +16,16 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [token, setToken] = useState<string | null>(localStorage.getItem('token'));
+  const [token, setToken] = useState<string | null>(
+    typeof window !== 'undefined' ? localStorage.getItem('token') : null
+  );
 
   useEffect(() => {
     // Sync the token to local storage whenever it changes
-    localStorage.setItem('token', token || '');
-    console.log("Token:", token, "saved to context and local storage");
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('token', token || '');
+      console.log('Token:', token, 'saved to context and local storage');
+    }
   }, [token]);
 
   return (

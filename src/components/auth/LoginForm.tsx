@@ -35,7 +35,7 @@ export function LoginForm() {
       }
       const data = await response.json();
       localStorage.setItem('token', data.token); // Store the JWT in localStorage
-      router.push('/'); // Redirect to dashboard or another route
+      router.push('/dashboard'); // Redirect to dashboard or another route
     } catch (error) {
       console.error('Error:', error.message);
     }

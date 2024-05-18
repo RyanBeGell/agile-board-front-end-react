@@ -46,7 +46,7 @@ export function SignupForm() {
       }
       const data = await response.json();
       setToken(data.token);
-      router.push('/');
+      router.push('/dashboard');
     } catch (error) {
       console.error('Error:', error instanceof Error ? error.message : 'An error occurred');
     }
