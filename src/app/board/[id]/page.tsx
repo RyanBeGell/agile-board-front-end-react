@@ -19,16 +19,13 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
+import { Textarea } from '@/components/ui/textarea';
 import { Board as BoardType, Column as ColumnType } from '@/types/interfaces';
 import { PopoverClose } from '@radix-ui/react-popover';
-import { MoreHorizontal } from 'lucide-react';
+import { MoreHorizontal, Plus, X } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
-import { Plus } from 'lucide-react';
-import { Textarea } from '@/components/ui/textarea';
-import { X } from 'lucide-react';
-import { Input } from '@/components/ui/input';
 
 export default function Page({ params }: { params: { id: String } }) {
   const router = useRouter();
@@ -58,7 +55,7 @@ export default function Page({ params }: { params: { id: String } }) {
           const data = (await response.json()) as BoardType;
           console.log('Board data:', data);
           setBoard(data);
-          setColumns(data.columns); 
+          setColumns(data.columns);
         } catch (error) {
           setError('Failed to load board');
           console.error('Error fetching board:', error);
@@ -73,16 +70,19 @@ export default function Page({ params }: { params: { id: String } }) {
 
   const handleSaveColumn = async () => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/columns/board/${boardId}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-        body: JSON.stringify({
-          name: newColumn,
-        }),
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/columns/board/${boardId}`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+          body: JSON.stringify({
+            name: newColumn,
+          }),
+        }
+      );
 
       if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -184,9 +184,14 @@ export default function Page({ params }: { params: { id: String } }) {
         </div>
         <div className="flex overflow-x-auto p-2 items-start">
           {columns.map((column) => (
-            <Column key={column.id} title={column.name} cards={column.cards} columnId={column.id} />
+            <Column
+              key={column.id}
+              title={column.name}
+              cards={column.cards}
+              columnId={column.id}
+            />
           ))}
-{isAddingColumn ? (
+          {isAddingColumn ? (
             <div className="min-w-[284px] bg-white p-4 rounded-md m-2 shadow-sm">
               <Textarea
                 value={newColumn}
@@ -200,8 +205,8 @@ export default function Page({ params }: { params: { id: String } }) {
                 </Button>
                 <Button
                   size="icon"
-                  variant="secondary"
-                  className="h-9 hover:bg-background"
+                  variant={'ghost'}
+                  className="h-9 text-black"
                   onClick={handleCancelColumn}
                 >
                   <X />
@@ -214,7 +219,8 @@ export default function Page({ params }: { params: { id: String } }) {
               variant="secondary"
               onClick={handleAddColumn}
             >
-              <Plus className="mr-2 h-4 w-4" /> Add another list
+              <Plus className="mr-2 h-4 w-4" />{' '}
+              {`${columns.length === 0 ? 'Add a list' : 'Add another list'}`}
             </Button>
           )}
         </div>
