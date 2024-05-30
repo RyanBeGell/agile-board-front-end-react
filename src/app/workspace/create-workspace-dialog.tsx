@@ -1,5 +1,6 @@
 'use client';
 
+import { customFetch } from '@/components/auth/CustomFetch';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -53,7 +54,7 @@ export function CreateWorkspaceDialog({
     };
 
     try {
-      const response = await fetch(url, {
+      const response = await customFetch(url, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -1,5 +1,7 @@
 'use client';
 
+import { customFetch } from '@/components/auth/CustomFetch';
+import { deleteBoard } from '@/components/board/board-slice';
 import Column from '@/components/board/column/column';
 import Layout from '@/components/board/layout';
 import {
@@ -20,12 +22,13 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 import { Textarea } from '@/components/ui/textarea';
+import { useToast } from '@/components/ui/use-toast';
+import { useAppDispatch } from '@/store/hooks';
 import { Board as BoardType, Column as ColumnType } from '@/types/interfaces';
 import { PopoverClose } from '@radix-ui/react-popover';
 import { MoreHorizontal, Plus, X } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { toast } from 'sonner';
 
 export default function Page({ params }: { params: { id: String } }) {
   const router = useRouter();
@@ -36,15 +39,16 @@ export default function Page({ params }: { params: { id: String } }) {
   const [board, setBoard] = useState<BoardType | null>(null);
   const [isAddingColumn, setIsAddingColumn] = useState<boolean>(false);
   const [newColumn, setNewColumn] = useState<string>('');
-  console.log(boardId);
+  const dispatch = useAppDispatch();
+  const { toast } = useToast();
 
   useEffect(() => {
     const fetchBoard = async () => {
       if (typeof boardId === 'string') {
         setLoading(true);
         try {
-          const response = await fetch(
-            `${process.env.NEXT_PUBLIC_API_URL}/api/boards/${boardId}/full`,
+          const response = await customFetch(
+            `${process.env.NEXT_PUBLIC_API_URL}/api/boards/${boardId}`,
             {
               headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -70,7 +74,7 @@ export default function Page({ params }: { params: { id: String } }) {
 
   const handleSaveColumn = async () => {
     try {
-      const response = await fetch(
+      const response = await customFetch(
         `${process.env.NEXT_PUBLIC_API_URL}/api/columns/board/${boardId}`,
         {
           method: 'POST',
@@ -116,6 +120,27 @@ export default function Page({ params }: { params: { id: String } }) {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
 
+  const handleDeleteBoard = async () => {
+    try {
+      await dispatch(deleteBoard(boardId)).unwrap();
+      toast({
+        title: `Board ${board?.name} has been deleted`,
+        description: `${new Date().toLocaleString('en-US', {
+          weekday: 'long',
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+          hour: 'numeric',
+          minute: '2-digit',
+          hour12: true,
+        })}`,
+      });
+      router.push('/dashboard'); // Navigate to the home page after deletion
+    } catch (error) {
+      // toast.error('Failed to delete board');
+    }
+  };
+
   return (
     <Layout>
       <div className={`${board?.gradient} min-h-screen w-full `}>
@@ -157,22 +182,7 @@ export default function Page({ params }: { params: { id: String } }) {
                       <AlertDialogCancel>Cancel</AlertDialogCancel>
                     </PopoverClose>
                     <PopoverClose>
-                      <AlertDialogAction
-                        onClick={() => {
-                          toast(`Board has been deleted`, {
-                            //show date in format "Sunday, December 03, 2023 at 9:00 AM"
-                            description: `${new Date().toLocaleString('en-US', {
-                              weekday: 'long',
-                              year: 'numeric',
-                              month: 'long',
-                              day: 'numeric',
-                              hour: 'numeric',
-                              minute: '2-digit',
-                              hour12: true,
-                            })}`,
-                          });
-                        }}
-                      >
+                      <AlertDialogAction onClick={handleDeleteBoard}>
                         Continue
                       </AlertDialogAction>
                     </PopoverClose>
