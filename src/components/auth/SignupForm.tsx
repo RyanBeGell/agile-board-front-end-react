@@ -1,20 +1,21 @@
-"use client"
+'use client';
 
-import { useState, FormEvent } from 'react';
-import Link from "next/link";
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { FormEvent, useState } from 'react';
 
-import { Button } from "@/components/ui/button";
+import { customFetch } from '@/components/auth/CustomFetch';
+import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { useAuth } from '@/contexts/AuthContext'; 
+} from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { useAuth } from '@/contexts/AuthContext';
 
 export function SignupForm() {
   const { setToken } = useAuth(); // Use the setToken from context
@@ -25,22 +26,27 @@ export function SignupForm() {
   const [username, setUsername] = useState<string>('');
   const router = useRouter();
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
+  const handleSubmit = async (
+    event: FormEvent<HTMLFormElement>
+  ): Promise<void> => {
     event.preventDefault();
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/register`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          firstName,
-          lastName,
-          email,
-          password,
-          username
-        }),
-      });
+      const response = await customFetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/register`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            firstName,
+            lastName,
+            email,
+            password,
+            username,
+          }),
+        }
+      );
       if (!response.ok) {
         throw new Error('Signup failed');
       }
@@ -48,7 +54,10 @@ export function SignupForm() {
       setToken(data.token);
       router.push('/dashboard');
     } catch (error) {
-      console.error('Error:', error instanceof Error ? error.message : 'An error occurred');
+      console.error(
+        'Error:',
+        error instanceof Error ? error.message : 'An error occurred'
+      );
     }
   };
 
@@ -125,7 +134,7 @@ export function SignupForm() {
           </Button>
         </form>
         <div className="mt-4 text-center text-sm">
-          Already have an account?{" "}
+          Already have an account?{' '}
           <Link href="/auth/login" className="underline">
             Sign in
           </Link>

@@ -1,5 +1,12 @@
 // WorkspaceContext.tsx
-import React, { createContext, useContext, useState, useCallback, ReactNode } from 'react';
+import { customFetch } from '@/components/auth/CustomFetch';
+import React, {
+  ReactNode,
+  createContext,
+  useCallback,
+  useContext,
+  useState,
+} from 'react';
 
 // Types.ts
 export interface Workspace {
@@ -16,21 +23,30 @@ export interface WorkspaceContextType {
   setSelectedWorkspace: (workspace: Workspace) => void;
 }
 
-const WorkspaceContext = createContext<WorkspaceContextType | undefined>(undefined);
+const WorkspaceContext = createContext<WorkspaceContextType | undefined>(
+  undefined
+);
 
 interface WorkspaceProviderProps {
   children: ReactNode; // Define children prop explicitly
 }
 
-export const WorkspaceProvider: React.FC<WorkspaceProviderProps> = ({ children }) => {
+export const WorkspaceProvider: React.FC<WorkspaceProviderProps> = ({
+  children,
+}) => {
   const [workspaces, setWorkspaces] = useState<Workspace[]>([]);
-  const [selectedWorkspace, setSelectedWorkspace] = useState<Workspace | null>(null);
+  const [selectedWorkspace, setSelectedWorkspace] = useState<Workspace | null>(
+    null
+  );
 
   const loadWorkspaces = useCallback(async () => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/workspaces`, {
-        headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` },
-      });
+      const response = await customFetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/workspaces`,
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+        }
+      );
       if (!response.ok) {
         throw new Error(`Network response was not ok: ${response.statusText}`);
       }
@@ -42,11 +58,19 @@ export const WorkspaceProvider: React.FC<WorkspaceProviderProps> = ({ children }
   }, []);
 
   const addWorkspace = useCallback((workspace: Workspace) => {
-    setWorkspaces(prev => [...prev, workspace]);
+    setWorkspaces((prev) => [...prev, workspace]);
   }, []);
 
   return (
-    <WorkspaceContext.Provider value={{ workspaces, selectedWorkspace, loadWorkspaces, addWorkspace, setSelectedWorkspace }}>
+    <WorkspaceContext.Provider
+      value={{
+        workspaces,
+        selectedWorkspace,
+        loadWorkspaces,
+        addWorkspace,
+        setSelectedWorkspace,
+      }}
+    >
       {children}
     </WorkspaceContext.Provider>
   );

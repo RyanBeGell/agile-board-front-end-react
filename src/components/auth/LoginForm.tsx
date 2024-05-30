@@ -1,35 +1,40 @@
-"use client"
+'use client';
 
-import { useState, FormEvent } from 'react';
-import Link from "next/link";
-import { useRouter } from 'next/navigation';
-
-import { Button } from "@/components/ui/button";
+import { customFetch } from '@/components/auth/CustomFetch';
+import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+} from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { FormEvent, useState } from 'react';
 
 export function LoginForm() {
-  const [username, setUsername] = useState<string>(''); 
-  const [password, setPassword] = useState<string>(''); 
+  const [username, setUsername] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
   const router = useRouter();
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
+  const handleSubmit = async (
+    event: FormEvent<HTMLFormElement>
+  ): Promise<void> => {
     event.preventDefault();
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/authenticate`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username, password }), // Payload includes username and password
-      });
+      const response = await customFetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/authenticate`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ username, password }), // Payload includes username and password
+        }
+      );
       if (!response.ok) {
         throw new Error('Login failed');
       }
@@ -50,7 +55,7 @@ export function LoginForm() {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <form onSubmit={handleSubmit} className="grid gap-4"> 
+        <form onSubmit={handleSubmit} className="grid gap-4">
           <div className="grid gap-2">
             <Label htmlFor="username">Username</Label>
             <Input
@@ -85,7 +90,7 @@ export function LoginForm() {
           </Button>
         </form>
         <div className="mt-4 text-center text-sm">
-          Don't have an account?{" "}
+          Don't have an account?{' '}
           <Link href="/auth/signup" className="underline">
             Sign up
           </Link>
