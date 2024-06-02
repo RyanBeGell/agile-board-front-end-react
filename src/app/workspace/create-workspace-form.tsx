@@ -1,3 +1,5 @@
+'use client'
+
 import { customFetch } from '@/components/auth/CustomFetch';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';

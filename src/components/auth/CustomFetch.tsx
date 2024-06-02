@@ -8,7 +8,7 @@ export const customFetch = async (
 
   if (response.status === 401) {
     // Token is invalid or expired
-    Router.push('/auth/login'); // Replace with your sign-in route
+    window.location.href = '/auth/login';
   }
 
   return response;
