@@ -42,6 +42,10 @@ export default function Page({ params }: { params: { id: String } }) {
   const dispatch = useAppDispatch();
   const { toast } = useToast();
 
+  const handleDeleteColumn = (deletedColumnId: string) => {
+    setColumns(columns.filter((column) => column.id !== deletedColumnId));
+  };
+
   useEffect(() => {
     const fetchBoard = async () => {
       if (typeof boardId === 'string') {
@@ -143,7 +147,7 @@ export default function Page({ params }: { params: { id: String } }) {
 
   return (
     <Layout>
-      <div className={`${board?.gradient} min-h-screen w-full `}>
+      <div className={`${board?.gradient} min-h-screen w-full`}>
         <div className="flex justify-between items-center bg-black bg-opacity-35 text-white text-opacity-90 text-xl font-bold py-2 px-4">
           Board Header {boardId}
           <Popover>
@@ -154,11 +158,10 @@ export default function Page({ params }: { params: { id: String } }) {
             </PopoverTrigger>
             <PopoverContent className="p-4 flex flex-col items-center">
               <h3 className="text-sm font-semibold mb-2">Board Actions</h3>
-              {/* Title */}
               <AlertDialog>
                 <AlertDialogTrigger asChild>
                   <Button
-                    variant="outline"
+                    variant="destructive"
                     className="w-full h-9"
                     onClick={() => {
                       console.log('Deleting the board...');
@@ -199,6 +202,7 @@ export default function Page({ params }: { params: { id: String } }) {
               title={column.name}
               cards={column.cards}
               columnId={column.id}
+              onDelete={handleDeleteColumn}
             />
           ))}
           {isAddingColumn ? (

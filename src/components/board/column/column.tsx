@@ -35,9 +35,10 @@ interface ColumnProps {
   title: string;
   cards: CardInterface[];
   columnId: string;
+  onDelete: (columnId: string) => void;
 }
 
-const Column: React.FC<ColumnProps> = ({ title, cards, columnId }) => {
+const Column: React.FC<ColumnProps> = ({ title, cards, columnId, onDelete }) => {
   const [newCard, setNewCard] = useState<string>('');
   const [isAddingCard, setIsAddingCard] = useState<boolean>(false);
   const [cardList, setCardList] = useState<CardInterface[]>(cards);
@@ -104,7 +105,7 @@ const Column: React.FC<ColumnProps> = ({ title, cards, columnId }) => {
 
       toast({
         title: `Column ${title} has been deleted`,
-        description: `${new Date().toLocaleString('en-US', {
+        description: new Date().toLocaleString('en-US', {
           weekday: 'long',
           year: 'numeric',
           month: 'long',
@@ -112,8 +113,11 @@ const Column: React.FC<ColumnProps> = ({ title, cards, columnId }) => {
           hour: 'numeric',
           minute: '2-digit',
           hour12: true,
-        })}`,
+        }),
       });
+
+      // Call the onDelete callback to update the state in the parent component
+      onDelete(columnId);
     } catch (error) {
       console.error('Error deleting column:', error);
     }
