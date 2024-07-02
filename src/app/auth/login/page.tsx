@@ -8,7 +8,7 @@ export default function LoginPage() {
   return (
     <div className="h-screen flex flex-col">
       <Navbar />
-      <div className="flex-grow flex flex-col items-center justify-center">
+      <div className="flex-grow flex flex-col items-center justify-center py-8">
         <h1 className="mb-5 text-4xl font-bold">Log in to Agilify</h1>
         <LoginForm />
       </div>
